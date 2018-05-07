@@ -135,13 +135,10 @@ Ship.Game.prototype = {
 
   die: function () {
     this.reset()
-    this.player.die()
   },
 
   reset: function () {
-    this.createArena()
-    this.state = 'playing'
-    this.food = new Snake.Food(70, 70, 10, 10)
+    this.init()
   },
 
   changeState: function () {
@@ -152,9 +149,9 @@ Ship.Game.prototype = {
       else if (this.state === 'playing') {
         this.state = 'pause'
       }
-      // else if (this.state === 'over') {
-      //   this.die()
-      // }
+      else if (this.state === 'over') {
+        this.die()
+      }
     }
   },
 
@@ -167,14 +164,6 @@ Ship.Game.prototype = {
           this.enemies[i].health--
           if (this.enemies[i].health == 0) {
             this.score++
-            // // Add PowerUp
-            // var r = random(20);
-            // if (r < 5) {
-            //   if (r == 0)    // New MultiShot
-            //     powerups.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 1));
-            //   else        // New ExtraPoints
-            //     powerups.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 0));
-            // }
             this.enemies[i].x = mathRandom(canvas.width / 10) * 10
             this.enemies[i].y = 0
             this.enemies[i].health = 2
@@ -189,17 +178,4 @@ Ship.Game.prototype = {
       }
     }
   },
-
-  createArena: function () {
-
-    this.canvas = document.getElementById('canvas')
-    this.ctx = canvas.getContext('2d')
-    // this.walls = new Array()
-    // this.walls.push(new Snake.Wall(100, 50, 10, 10))
-    // this.walls.push(new Snake.Wall(100, 100, 10, 10))
-    // this.walls.push(new Snake.Wall(200, 50, 10, 10))
-    // this.walls.push(new Snake.Wall(200, 100, 10, 10))
-
-  }
-
 }
