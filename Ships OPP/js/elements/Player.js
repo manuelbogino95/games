@@ -21,7 +21,7 @@ Ship.Player.prototype = {
 
   constructor: Ship.Player,
 
-  init: function () {    
+  init: function () {
 
   },
 
@@ -33,6 +33,8 @@ Ship.Player.prototype = {
     this.checkShots()
 
     this.checkPosition()
+
+    this.checkPowerUps()
 
   },
 
@@ -88,12 +90,43 @@ Ship.Player.prototype = {
       this.y = 0
     }
 
-    if(Ship.Game.player.timer > 0) {
+    if (Ship.Game.player.timer > 0) {
       Ship.Game.player.timer = Ship.Game.player.timer - 1
     }
 
     if (Ship.Game.player.health == 0) {
       Ship.Game.state = 'over';
+    }
+  },
+
+  checkPowerUps: function () {
+    // PowerUps
+    for (var i = 0, l = Ship.Game.powerups.length; i < l; i++) {
+      Ship.Game.powerups[i].y += 5
+      // Powerup Outside Screen
+      if (Ship.Game.powerups[i].y > canvas.height) {
+        Ship.Game.powerups.splice(i--, 1)
+        l--;
+        continue;
+      }
+      if (this.intersects(Ship.Game.powerups[i])) {
+        if (Ship.Game.powerups[i].type == 1) { // MultiShot
+          if (this.multiShot < 3) {
+            Ship.Game.player.multiShot++;
+            // messages.push(new Message('MULTI', this.x - (this.width / 2), this.y - 15))
+          }
+          else {
+            Ship.Game.score += 5;
+            // messages.push(new Message('+5', this.x - (this.width / 2), this.y - 15))
+          }
+        }
+        else { // ExtraPoints
+          Ship.Game.score += 5;
+          // messages.push(new Message('+5', this.x - (this.width / 2), this.y - 15))
+        }
+        Ship.Game.powerups.splice(i--, 1);
+        l--;
+      }
     }
   },
 

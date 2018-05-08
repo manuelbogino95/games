@@ -14,31 +14,10 @@ Ship.Game.prototype = {
 
   init: function () {
 
-    this.canvas = null
-    this.ctx = null
-    this.state = 'playing'
-    this.canvas = document.getElementById('canvas')
-    this.ctx = canvas.getContext('2d')
-    this.player = new Ship.Player(90, 290, 10, 10, 0, 3)
-    this.enemies = []
-    this.enemies.push(new Ship.Enemy(10, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(60, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(120, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(180, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(-10, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(50, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(110, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(170, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(-20, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(40, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(100, 0, 10, 10, 0, 2))
-    this.enemies.push(new Ship.Enemy(160, 0, 10, 10, 0, 2))
-    this.shots = []
-    this.stars = []
-    for (var i = 0; i < 200; i++) {
-      this.stars.push(new Ship.Star(mathRandom(canvas.width), mathRandom(canvas.height)))
-    }
-    this.score = 0
+    this.createArena()
+    // for (var i = 0; i < 200; i++) {
+    //   this.stars.push(new Ship.Star(mathRandom(canvas.width), mathRandom(canvas.height)))
+    // }
     this.update()
 
   },
@@ -77,6 +56,11 @@ Ship.Game.prototype = {
     //Stars
     for (i = 0, l = this.stars.length; i < l; i++) {
       this.stars[i].render(this.ctx);
+    }
+
+    // PowerUps
+    for (var i = 0, l = this.powerups.length; i < l; i++) {
+      this.powerups[i].render(this.ctx);
     }
 
     // Draw score
@@ -151,12 +135,21 @@ Ship.Game.prototype = {
   enemyAction: function () {
     for (var i = 0, l = this.enemies.length; i < l; i++) {
       this.enemies[i].update();
-
+      // Check if enemy got shot
       for (var j = 0, ll = this.shots.length; j < ll; j++) {
+
         if (this.shots[j].rectCollision(this.enemies[i])) {
           this.enemies[i].health--
           if (this.enemies[i].health == 0) {
             this.score++
+            // Add PowerUp
+            var r = mathRandom(20);
+            if (r < 5) {
+              if (r == 0)    // New MultiShot
+                this.powerups.push(new Ship.PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 1));
+              else        // New ExtraPoints
+                this.powerups.push(new Ship.PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 0));
+            }
             this.enemies[i].x = mathRandom(canvas.width / 10) * 10
             this.enemies[i].y = 0
             this.enemies[i].health = 2
