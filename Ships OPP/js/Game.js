@@ -110,7 +110,7 @@ Ship.Game.prototype = {
     if (this.state === 'playing') {
       //Move stars
       for (var i = 0, l = this.stars.length; i < l; i++) {
-        this.stars[i].update()        
+        this.stars[i].update()
       }
 
       //Update Player
@@ -133,14 +133,6 @@ Ship.Game.prototype = {
     Keyboard.lastPress = null
   },
 
-  die: function () {
-    this.reset()
-  },
-
-  reset: function () {
-    this.init()
-  },
-
   changeState: function () {
     if (Keyboard.lastPress === Keyboard.KEY_ENTER) {
       if (this.state === 'pause') {
@@ -149,8 +141,9 @@ Ship.Game.prototype = {
       else if (this.state === 'playing') {
         this.state = 'pause'
       }
-      else if (this.state === 'over') {
-        this.die()
+      else if (this.state === 'over' && Keyboard.lastPress === Keyboard.KEY_ENTER) {
+        this.createArena();
+        this.state = 'playing';
       }
     }
   },
@@ -178,4 +171,33 @@ Ship.Game.prototype = {
       }
     }
   },
+
+  createArena: function () {
+
+    this.canvas = null;
+    this.ctx = null
+    this.gameover = false;
+    this.state = 'playing'
+    this.stars = []
+    this.canvas = document.getElementById('canvas')
+    this.ctx = canvas.getContext('2d')
+    this.score = 0;
+    this.enemies = []
+    this.powerups = []
+    this.shots = []
+    this.star = new Image()
+    this.gun = new Image()
+    this.gun.src = 'assets/gun.png'
+    this.star.src = 'assets/star.png'
+    this.player = new Ship.Player(90, 290, 10, 10, 0, 3);
+    this.enemies.push(new Ship.Enemy(10, 20, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(30, 20, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(50, 20, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(80, 0, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(100, 0, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(120, 0, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(150, 20, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(170, 20, 10, 10, 0, 2))
+    this.enemies.push(new Ship.Enemy(190, 20, 10, 10, 0, 2))
+  }
 }
