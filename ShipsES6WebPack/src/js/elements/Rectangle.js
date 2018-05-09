@@ -1,4 +1,4 @@
-export class Rectangle {
+export default class Rectangle {
     constructor(x, y, width, height, type, health) {
         this.x = (x === undefined) ? 0 : x
         this.y = (y === undefined) ? 0 : y
@@ -38,7 +38,7 @@ export class Rectangle {
         if (ctx === undefined) {
             window.console.warn('Missing parameters on function fill')
         } else {
-            ctx.fillStyle = '#0f0';
+            // ctx.fillStyle = '#0f0';
             ctx.fillRect(this.x, this.y, 10, 10);
             // ctx.fillRect(this.x, this.y, this.width, this.height)
         }

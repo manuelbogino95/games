@@ -1,7 +1,9 @@
-import { Game } from './Game.js'
+import Game from './Game.js';
+import { keyboard } from './utils/Keyboard.js';
 
 window.onload = () => {    
-    let game = new Game();
+    keyboard.listen();
+    const game = new Game();
     game.init();
 }
 
