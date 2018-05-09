@@ -17,13 +17,13 @@ export class Keyboard {
   listen() {
 
     document.addEventListener('keyup', evt => {
-
+      
       this.pressing[evt.keyCode] = false
 
     }, false);
 
     document.addEventListener('keydown', evt => {
-
+      
       this.lastPress = evt.keyCode;
       this.pressing[evt.keyCode] = true;
 
