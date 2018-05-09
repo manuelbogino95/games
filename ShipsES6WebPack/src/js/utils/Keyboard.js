@@ -2,8 +2,8 @@
 export class Keyboard {
 
   constructor() {
-    this.pressing = [];
-    this.lastPress = null;
+    this.pressing = []
+    this.lastPress = null
     this.x = 0
     this.y = 0
     this.KEY_LEFT = 37
@@ -12,7 +12,6 @@ export class Keyboard {
     this.KEY_DOWN = 40
     this.KEY_ENTER = 13
     this.KEY_SPACE = 32
-    console.log('funciono');
   }
 
   listen() {
