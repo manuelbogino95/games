@@ -4,7 +4,6 @@ var Ship = Ship || {}
 
 //This is the constructor
 Ship.Shot = function (x, y, width, height, type, health) {
-
     this.x = (x === undefined) ? 0 : x
     this.y = (y === undefined) ? 0 : y
     this.width = (width === undefined) ? 0 : width
@@ -16,12 +15,7 @@ Ship.Shot = function (x, y, width, height, type, health) {
 }
 
 Ship.Shot.prototype = {
-
     constructor: Ship.Shot,
-
-    init: function () {
-
-    },
 
     update: function () {
         // Move Shots:

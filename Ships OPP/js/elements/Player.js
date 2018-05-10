@@ -4,7 +4,6 @@ var Ship = Ship || {}
 
 //This is the constructor
 Ship.Player = function (x, y, width, height, type, health) {
-
   this.x = (x === undefined) ? 0 : x
   this.y = (y === undefined) ? 0 : y
   this.width = (width === undefined) ? 0 : width
@@ -14,19 +13,12 @@ Ship.Player = function (x, y, width, height, type, health) {
   this.timer = 0
   this.elapsedTime = 0
   this.multiShot = 1
-
 }
 
 Ship.Player.prototype = {
-
   constructor: Ship.Player,
 
-  init: function () {
-
-  },
-
   update: function () {
-
     // Move Player:
     this.movePlayer()
 
@@ -35,7 +27,6 @@ Ship.Player.prototype = {
     this.checkPosition()
 
     this.checkPowerUps()
-
   },
 
   render: function (ctx) {
@@ -75,7 +66,6 @@ Ship.Player.prototype = {
   },
 
   checkPosition: function () {
-
     if (this.x > canvas.width - 10) {
       this.x = canvas.width - 10;
     }

@@ -4,7 +4,6 @@ var Ship = Ship || {}
 
 //This is the constructor
 Ship.Enemy = function (x, y, width, height, type, health) {
-
   this.x = (x === undefined) ? 0 : x
   this.y = (y === undefined) ? 0 : y
   this.width = (width === undefined) ? 0 : width
@@ -13,16 +12,10 @@ Ship.Enemy = function (x, y, width, height, type, health) {
   this.health = (health === undefined) ? 1 : health
   this.timer = 0
   this.elapsedTime = 0
-
 }
 
 Ship.Enemy.prototype = {
-
   constructor: Ship.Enemy,
-
-  init: function () {
-
-  },
 
   update: function () {
     // Move Enemy:
@@ -43,7 +36,6 @@ Ship.Enemy.prototype = {
       this.drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
       // ctx.fillStyle = 'white'
     }
-
   },
 
   moveEnemy: function () {

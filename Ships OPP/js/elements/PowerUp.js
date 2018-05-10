@@ -4,7 +4,6 @@
 var Ship = Ship || {}
 
 Ship.PowerUp = function (x, y, width, height, type, health) {
-
   this.x = (x === undefined) ? 0 : x
   this.y = (y === undefined) ? 0 : y
   this.width = (width === undefined) ? 0 : width
@@ -15,9 +14,6 @@ Ship.PowerUp = function (x, y, width, height, type, health) {
 }
 
 Ship.PowerUp.prototype = {
-
-
-
   render : function(ctx){
     if(this.type == 1) {
       ctx.strokeStyle='#f90'

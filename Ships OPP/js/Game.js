@@ -9,7 +9,6 @@ Ship.Game = function () {
 }
 
 Ship.Game.prototype = {
-
   constructor: Ship.Game,
 
   init: function () {
@@ -19,7 +18,6 @@ Ship.Game.prototype = {
     //   this.stars.push(new Ship.Star(mathRandom(canvas.width), mathRandom(canvas.height)))
     // }
     this.update()
-
   },
 
   update: function () {
@@ -35,7 +33,6 @@ Ship.Game.prototype = {
   },
 
   render: function () {
-
     //Canvas:
     this.ctx.fillStyle = '#000'
     this.ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -86,11 +83,9 @@ Ship.Game.prototype = {
       this.ctx.fillStyle = 'white';
       this.ctx.fillText('GAME OVER', 100, 150);
     }
-
   },
 
   resume: function () {
-
     if (this.state === 'playing') {
       //Move stars
       for (var i = 0, l = this.stars.length; i < l; i++) {
@@ -166,7 +161,6 @@ Ship.Game.prototype = {
   },
 
   createArena: function () {
-
     this.canvas = null;
     this.ctx = null
     this.gameover = false;
