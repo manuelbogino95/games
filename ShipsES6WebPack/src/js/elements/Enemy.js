@@ -12,17 +12,6 @@ export default class Enemy extends Rectangle {
         this.intersectPlayer(player);
     }
 
-    render() {
-        //Draw Enemy
-        if (this.timer % 2 == 0) {
-            ctx.fillStyle = 'blue';
-            this.fill(ctx);
-        } else {
-            ctx.fillStyle = 'white';
-            this.fill(ctx);
-        }
-    }
-
     moveEnemy() {
         // Move Enemy    
         this.y += 2;

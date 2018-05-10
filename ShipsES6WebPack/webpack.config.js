@@ -22,15 +22,15 @@ module.exports = {
     app: './src/js/app.js',
   },
   output: {
-    path: path.resolve(__dirname,'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
     // publicPath: '/dist'
   },
-  module:{
-    rules:[
+  module: {
+    rules: [
       {
         test: /\.js$/,
-        use:[
+        use: [
           {
             loader: 'babel-loader',
             options: {
@@ -48,7 +48,7 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options:{
+            options: {
               name: 'video/[name].[ext]',
             },
           },
@@ -59,7 +59,7 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options:{
+            options: {
               name: 'fonts/[name].[ext]',
             },
           },
@@ -70,7 +70,7 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options:{
+            options: {
               name: 'img/[name].[ext]',
               // outputFile: 'img/',
               // publicPath: 'img/',
@@ -83,24 +83,24 @@ module.exports = {
             options: {
               bypassOnDebug: true,
               mozjpeg: {
-                  progressive: true,
-                  quality: 65
-                },
-                // optipng.enabled: false will disable optipng
-                optipng: {
-                  enabled: false,
-                },
-                pngquant: {
-                  quality: '65-90',
-                  speed: 4
-                },
-                gifsicle: {
-                  interlaced: false,
-                },
-                // the webp option will enable WEBP
-                webp: {
-                  quality: 75
-                }
+                progressive: true,
+                quality: 65
+              },
+              // optipng.enabled: false will disable optipng
+              optipng: {
+                enabled: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              // the webp option will enable WEBP
+              webp: {
+                quality: 75
+              }
             }
           }
         ],
@@ -108,35 +108,35 @@ module.exports = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-            fallback: "style-loader",
-            use: [
-               {
-                   loader: 'css-loader?sourceMap',
-               },
-               {
-                   loader: 'postcss-loader?sourceMap',
-               },
-               {
-                  loader: 'sass-loader?sourceMap'
-               }
-            ]
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader?sourceMap',
+            },
+            {
+              loader: 'postcss-loader?sourceMap',
+            },
+            {
+              loader: 'sass-loader?sourceMap'
+            }
+          ]
         }),
       }
     ]
   },
-  plugins:[
+  plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     }),
     extractPlugin,
     new HtmlWebpackPlugin({
-        hash: true,
-        title: 'My Awesome application',
-        myPageHeader: 'Hello World',
-        template: './src/index.html',
-        chunks: ['app'],
-        filename: 'index.html' //relative to root of the application
+      hash: true,
+      title: 'My Awesome application',
+      myPageHeader: 'Hello World',
+      template: './src/index.html',
+      chunks: ['app'],
+      filename: 'index.html' //relative to root of the application
     }),
     new CleanWebpackPlugin(['dist']),
     new webpack.LoaderOptionsPlugin({

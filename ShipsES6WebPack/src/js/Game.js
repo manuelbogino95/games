@@ -1,6 +1,7 @@
 import Player from './elements/Player.js';
 import Enemy from './elements/Enemy.js';
 import Star from './elements/Star';
+import PowerUp from './elements/PowerUp';
 import { keyboard } from './utils/Keyboard.js';
 import { canvas, ctx } from './elements/Canvas';
 import MathRandom from './utils/MathRandom';
@@ -8,7 +9,7 @@ import MathRandom from './utils/MathRandom';
 export default class Game {
     constructor() {
         this.spritesheet = new Image();
-        this.spritesheet.src = 'src/assets/spritesheet.png';
+        this.spritesheet.src = '../../ShipsES6WebPack/src/assets/spritesheet.png';
         this.player = null;
         this.enemies = [];
         this.stars = [];
@@ -37,22 +38,27 @@ export default class Game {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         //Draw Player
-        this.player.render();
+        this.player.drawImageArea(ctx,this.spritesheet, 0, 0, 10, 10)
 
         //Draw Enemies
         for (let i = 0, l = this.enemies.length; i < l; i++) {
-            this.enemies[i].render(ctx);
+            this.enemies[i].drawImageArea(ctx, this.spritesheet, 30, 0, 10, 10)
         }
 
         //Draw Shots
         for (let i = 0, l = this.player.shots.length; i < l; i++) {
-            this.player.shots[i].render();
+            this.player.shots[i].drawImageArea(ctx, this.spritesheet, 70, 0, 10, 10);
         }
 
         //Stars
         for (let i = 0, l = this.stars.length; i < l; i++) {
             this.stars[i].render();
         }
+
+        // PowerUps
+        // for (let i = 0, l = this.powerups.length; i < l; i++) {
+        //     this.powerups[i].render(this.ctx);
+        // }
 
         // Draw score
         ctx.fillStyle = '#fff'
@@ -134,13 +140,13 @@ export default class Game {
                     if (this.enemies[i].health == 0) {
                         this.player.score++
                         // Add PowerUp
-                        // var r = mathRandom(20);
-                        // if (r < 5) {
-                        //     if (r == 0)    // New MultiShot
-                        //         this.powerups.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 1));
-                        //     else        // New ExtraPoints
-                        //         this.powerups.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 0));
-                        // }
+                        var r = MathRandom.mathRandom(20);
+                        if (r < 5) {
+                            if (r == 0)    // New MultiShot
+                                this.powerups.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 1));
+                            else        // New ExtraPoints
+                                this.powerups.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 0));
+                        }
                         this.enemies[i].x = MathRandom.mathRandom(canvas.width / 10) * 10
                         this.enemies[i].y = 0
                         this.enemies[i].health = 2

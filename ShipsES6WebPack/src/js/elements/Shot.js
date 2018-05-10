@@ -11,12 +11,6 @@ export default class Shot extends Rectangle {
         this.moveShots()
     }
 
-    render() {
-        // Draw Shots
-        ctx.fillStyle = 'red';
-        this.fill(ctx);
-    }
-
     moveShots() {
         // Move Shots
         this.y -= 10

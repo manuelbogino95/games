@@ -17,11 +17,6 @@ export default class Player extends Rectangle {
         this.checkPosition();
     }
 
-    render() {
-        ctx.fillStyle = '#0f0';
-        this.fill(ctx);
-    }
-
     movePlayer() {
         // Move Player        
         if (keyboard.pressing[keyboard.KEY_UP]) {
