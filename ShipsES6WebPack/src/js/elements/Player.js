@@ -1,7 +1,7 @@
 import Rectangle from './Rectangle';
 import Shot from './Shot';
 import { keyboard } from '../utils/Keyboard';
-import { ctx } from './Canvas';
+import { canvas, ctx } from './Canvas';
 
 export default class Player extends Rectangle {
     constructor(x, y, width, height, type, health) {
@@ -13,8 +13,8 @@ export default class Player extends Rectangle {
 
     update() {
         this.movePlayer();
-
         this.checkShots();
+        this.checkPosition();
     }
 
     render() {
@@ -52,5 +52,25 @@ export default class Player extends Rectangle {
             }
             keyboard.lastPress = null
         }
-    }    
+    }
+
+    checkPosition() {
+        if (this.x > canvas.width - 10) {
+            this.x = canvas.width - 10;
+        }
+        if (this.x < 0) {
+            this.x = 0
+        }
+
+        if (this.y > canvas.height - 10) {
+            this.y = canvas.height - 10;
+        }
+        if (this.y < 0) {
+            this.y = 0
+        }
+
+        if (this.timer > 0) {
+            this.timer = this.timer - 1
+        }        
+    }
 }

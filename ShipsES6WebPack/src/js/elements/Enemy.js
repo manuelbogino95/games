@@ -7,9 +7,9 @@ export default class Enemy extends Rectangle {
         super(x, y, width, height, type, health);
     }
 
-    update() {
-        // Move Enemy:
+    update(player) {
         this.moveEnemy();
+        this.intersectPlayer(player);
     }
 
     render() {
@@ -34,10 +34,10 @@ export default class Enemy extends Rectangle {
         }
     }
 
-    intersectPlayer() {
-        if (this.intersects(Ship.Game.player) && Ship.Game.player.timer == 0) {
-            Ship.Game.player.health -= 1
-            Ship.Game.player.timer = 20
+    intersectPlayer(player) {
+        if (this.intersects(player) && player.timer == 0) {
+            player.health -= 1;
+            player.timer = 20;
         }
     }
 }

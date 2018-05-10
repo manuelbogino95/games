@@ -1,5 +1,6 @@
 import Player from './elements/Player.js';
 import Enemy from './elements/Enemy.js';
+import Star from './elements/Star';
 import { keyboard } from './utils/Keyboard.js';
 import { canvas, ctx } from './elements/Canvas';
 import MathRandom from './utils/MathRandom';
@@ -10,6 +11,8 @@ export default class Game {
         this.spritesheet.src = 'src/assets/spritesheet.png';
         this.player = null;
         this.enemies = [];
+        this.stars = [];
+        this.powerups = [];
         this.state = 'playing';
         this.gameOver = false;
     }
@@ -24,6 +27,7 @@ export default class Game {
         this.changeState();
         this.resume();
         this.pause();
+        this.checkPlayerHealth();
         setTimeout((this.update.bind(this)), 40);
     }
 
@@ -43,6 +47,11 @@ export default class Game {
         //Draw Shots
         for (let i = 0, l = this.player.shots.length; i < l; i++) {
             this.player.shots[i].render();
+        }
+
+        //Stars
+        for (let i = 0, l = this.stars.length; i < l; i++) {
+            this.stars[i].render();
         }
 
         // Draw score
@@ -72,6 +81,11 @@ export default class Game {
 
     resume() {
         if (this.state === 'playing') {
+            //Move stars
+            for (let i = 0, l = this.stars.length; i < l; i++) {
+                this.stars[i].update()
+            }
+
             //Update Player
             this.player.update();
             this.enemyAction();
@@ -104,9 +118,15 @@ export default class Game {
         keyboard.lastPress = null
     }
 
+    checkPlayerHealth() {
+        if (this.player.health == 0) {
+            this.state = 'over';
+        }
+    }
+
     enemyAction() {
         for (let i = 0, l = this.enemies.length; i < l; i++) {
-            this.enemies[i].update();
+            this.enemies[i].update(this.player);
             // Check if enemy got shot
             for (let j = 0, ll = this.player.shots.length; j < ll; j++) {
                 if (this.player.shots[j].rectCollision(this.enemies[i])) {
@@ -143,9 +163,11 @@ export default class Game {
         this.enemy = new Enemy(90, 290, 10, 10, 0, 3);
         this.score = 0;
         this.enemies = [];
-        // this.powerups = []
-        // this.stars = []  
-        // this.shots = []
+        this.powerups = [];
+        this.stars = [];
+        for (var i = 0; i < 200; i++) {
+            this.stars.push(new Star(MathRandom.mathRandom(canvas.width), MathRandom.mathRandom(canvas.height)))
+        }
         // this.star = new Image()
         // this.gun = new Image()
         // this.gun.src = 'assets/gun.png'
