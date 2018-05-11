@@ -6,16 +6,14 @@ export default class PowerUp extends Rectangle {
         super(x, y, width, height, type, health);
     }
 
-    render() {
+    render(gunImg, starImg) {
         if (this.type == 1) {
-            ctx.fillStyle = '#ffff00';
-            this.fill(ctx);
-            // this.drawImage(ctx, Ship.Game.gun)
+            ctx.strokeStyle = '#f90'
+            this.drawImage(ctx, gunImg)
         }
         else {
-            ctx.fillStyle = '#99ff33';
-            this.fill(ctx);
-            // this.drawImage(ctx, Ship.Game.star)
+            ctx.strokeStyle = '#cc6'
+            this.drawImage(ctx, starImg)
         }
     }
 }

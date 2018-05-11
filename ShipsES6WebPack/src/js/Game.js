@@ -10,10 +10,14 @@ export default class Game {
     constructor() {
         this.spritesheet = new Image();
         this.spritesheet.src = '../../ShipsES6WebPack/src/assets/spritesheet.png';
+        this.gunImg = new Image();
+        this.gunImg.src = '../../ShipsES6WebPack/src/assets/gun.png';
+        this.starImg = new Image();
+        this.starImg.src = '../../ShipsES6WebPack/src/assets/star.png';
         this.player = null;
         this.enemies = [];
         this.stars = [];
-        this.powerups = [];
+        this.powerUps = [];
         this.state = 'playing';
         this.gameOver = false;
     }
@@ -38,11 +42,12 @@ export default class Game {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         //Draw Player
-        this.player.drawImageArea(ctx,this.spritesheet, 0, 0, 10, 10)
+        this.player.render(this.spritesheet);
 
         //Draw Enemies
         for (let i = 0, l = this.enemies.length; i < l; i++) {
-            this.enemies[i].drawImageArea(ctx, this.spritesheet, 30, 0, 10, 10)
+            //this.enemies[i].drawImageArea(ctx, this.spritesheet, 30, 0, 10, 10);
+            this.enemies[i].render(this.spritesheet);
         }
 
         //Draw Shots
@@ -50,15 +55,15 @@ export default class Game {
             this.player.shots[i].drawImageArea(ctx, this.spritesheet, 70, 0, 10, 10);
         }
 
+        //Draw PowerUps
+        for (var i = 0, l = this.powerUps.length; i < l; i++) {
+            this.powerUps[i].render(this.gunImg, this.starImg);
+        }
+
         //Stars
         for (let i = 0, l = this.stars.length; i < l; i++) {
             this.stars[i].render();
         }
-
-        // PowerUps
-        // for (let i = 0, l = this.powerups.length; i < l; i++) {
-        //     this.powerups[i].render(this.ctx);
-        // }
 
         // Draw score
         ctx.fillStyle = '#fff'
@@ -102,6 +107,14 @@ export default class Game {
                     l--
                 }
             }
+
+            //Check For Powerup Pickup
+            for (let i = 0, l = this.powerUps.length; i < l; i++) {
+                if (this.player.checkPowerUp(this.powerUps[i])) {
+                    this.powerUps.splice(i--, 1);
+                    l--;
+                }
+            }
         }
     }
 
@@ -143,9 +156,9 @@ export default class Game {
                         var r = MathRandom.mathRandom(20);
                         if (r < 5) {
                             if (r == 0)    // New MultiShot
-                                this.powerups.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 1));
+                                this.powerUps.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 1));
                             else        // New ExtraPoints
-                                this.powerups.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 0));
+                                this.powerUps.push(new PowerUp(this.enemies[i].x, this.enemies[i].y, 10, 10, 0));
                         }
                         this.enemies[i].x = MathRandom.mathRandom(canvas.width / 10) * 10
                         this.enemies[i].y = 0
@@ -169,15 +182,11 @@ export default class Game {
         this.enemy = new Enemy(90, 290, 10, 10, 0, 3);
         this.score = 0;
         this.enemies = [];
-        this.powerups = [];
+        this.powerUps = [];
         this.stars = [];
         for (var i = 0; i < 200; i++) {
-            this.stars.push(new Star(MathRandom.mathRandom(canvas.width), MathRandom.mathRandom(canvas.height)))
+            this.stars.push(new Star(MathRandom.mathRandom(canvas.width), MathRandom.mathRandom(canvas.height)));
         }
-        // this.star = new Image()
-        // this.gun = new Image()
-        // this.gun.src = 'assets/gun.png'
-        // this.star.src = 'assets/star.png'
         this.enemies.push(new Enemy(30, 20, 10, 10, 0, 2))
         this.enemies.push(new Enemy(10, 20, 10, 10, 0, 2))
         this.enemies.push(new Enemy(50, 20, 10, 10, 0, 2))

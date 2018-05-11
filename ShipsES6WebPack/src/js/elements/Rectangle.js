@@ -1,17 +1,18 @@
 export default class Rectangle {
     constructor(x, y, width, height, type, health) {
-        this.x = (x === undefined) ? 0 : x
-        this.y = (y === undefined) ? 0 : y
-        this.width = (width === undefined) ? 0 : width
-        this.height = (height === undefined) ? this.width : height
-        this.type = (type === undefined) ? 1 : type
-        this.health = (health === undefined) ? 1 : health
-        this.timer = 0
+        this.x = (x === undefined) ? 0 : x;
+        this.y = (y === undefined) ? 0 : y;
+        this.width = (width === undefined) ? 0 : width;
+        this.height = (height === undefined) ? this.width : height;
+        this.type = (type === undefined) ? 1 : type;
+        this.health = (health === undefined) ? 1 : health;
+        this.timer = 0;
+        this.elapsedTime = 0;
     }
 
     intersects(rect) {
         if (rect === undefined) {
-            window.console.warn('Missing parameters on function intersects')
+            window.console.warn('Missing parameters on function intersects');
         }
         else {
             return (this.x < rect.x + rect.width &&
@@ -23,7 +24,7 @@ export default class Rectangle {
 
     rectCollision(rect) {
         if (rect === undefined) {
-            window.console.warn('Missing parameters on function intersects')
+            window.console.warn('Missing parameters on function intersects');
         }
         else {
             return (
@@ -36,7 +37,7 @@ export default class Rectangle {
 
     fill(ctx) {
         if (ctx === undefined) {
-            window.console.warn('Missing parameters on function fill')
+            window.console.warn('Missing parameters on function fill');
         } else {
             // ctx.fillStyle = '#0f0';
             ctx.fillRect(this.x, this.y, 10, 10);
@@ -46,14 +47,14 @@ export default class Rectangle {
 
     drawImage(ctx, img) {
         if (img === undefined) {
-            window.console.warn('Missing parameters on function drawImage')
+            window.console.warn('Missing parameters on function drawImage');
         }
         else {
             if (img.width) {
-                ctx.drawImage(img, this.x, this.y)
+                ctx.drawImage(img, this.x, this.y);
             }
             else {
-                ctx.strokeRect(this.x, this.y, this.width, this.height)
+                ctx.strokeRect(this.x, this.y, this.width, this.height);
             }
         }
     }
@@ -62,6 +63,6 @@ export default class Rectangle {
         if (img.width)
             ctx.drawImage(img, sx, sy, sw, sh, this.x, this.y, this.width, this.height);
         else
-            ctx.strokeRect(this.x, this.y, this.width, this.height)
+            ctx.strokeRect(this.x, this.y, this.width, this.height);
     }
 }

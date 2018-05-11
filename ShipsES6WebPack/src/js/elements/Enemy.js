@@ -12,6 +12,16 @@ export default class Enemy extends Rectangle {
         this.intersectPlayer(player);
     }
 
+    render(spritesheet) {
+        if (this.timer % 2 == 0) {
+            ctx.strokeStyle = '#00f';
+            this.drawImageArea(ctx, spritesheet, 30, 0, 10, 10);
+        } else {
+            ctx.strokeStyle = '#fff';
+            this.drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
+        }
+    }
+
     moveEnemy() {
         // Move Enemy    
         this.y += 2;
